@@ -53,6 +53,7 @@ final class Marker0: ObservableObject {
         // 已有模型节点：只更新变换（每次都要设 scale，否则 simdTransform 会覆盖掉）
         if let node = modelNode {
             let scale = Self.modelScale
+            let transform = marker.homoMat
             DispatchQueue.main.async { [weak self] in
                 guard let self,
                       let sceneView = self.sceneView,
@@ -76,6 +77,7 @@ final class Marker0: ObservableObject {
         node.name = Self.markerNodeName
 
         // 把 SceneKit 节点挂载 & 变换更新放到主线程（先设 transform，再设 scale，否则 scale 会被覆盖）
+        let transform = marker.homoMat
         DispatchQueue.main.async { [weak self] in
             guard let self,
                   let sceneView = self.sceneView,
